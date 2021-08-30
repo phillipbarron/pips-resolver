@@ -1,22 +1,20 @@
-var parseString = require('xml2js').parseString;
-const express = require('express')
-const app = express()
-const port = 3000
+var parseString = require("xml2js").parseString;
+const express = require("express");
+const app = express();
 
-const { getPipsResponse } = require('./clients/pips-client');
+const { getAllTheThings } = require('./services/pips-service');
+const port = 3000;
 
-app.get('/pips/:pid', async (req, res) => {
-  const pipdsResponse = await getPipsResponse(req.params.pid)
-  const asJson = parseString(pipdsResponse);
+const { getPipsResponse } = require("./clients/pips-client");
+
+app.get("/pips/:pid", async (req, res) => {
+  const pipdsResponse = await getPipsResponse(req.params.pid);
   parseString(pipdsResponse, function (err, result) {
-    console.log({pipdsResponse, asJson })
-    // const asJsonObject =  JSON.parse(asJson)
-    res.json(result)
+    console.log({ result });
+    res.json(getAllTheThings(result));
+  });
 });
 
-
-})
-
 app.listen(port, () => {
-  console.log(`Pips Resolver listening on http://localhost:${port}`)
-})
+  console.log(`Pips Resolver listening on http://localhost:${port}`);
+});
