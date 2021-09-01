@@ -1,3 +1,3 @@
 # PIPs resolver
 
-for some PID, get the type
+for some PID, get the type & return it
